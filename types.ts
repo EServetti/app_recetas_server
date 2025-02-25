@@ -1,3 +1,5 @@
+import { ObjectId } from "mongoose";
+
 interface Ingredient {
     name: string;
     amount: string;
@@ -21,3 +23,14 @@ interface Ingredient {
     nutrition: Nutrition;
   }
   
+  export interface User {
+    userName: string;
+    email: string;
+    password: string;
+    verified?: boolean;
+    verifyCode?: string | null;
+    recipes?: ObjectId[]; 
+    role: "USER" | "ADMIN"; 
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | null;
+  }
