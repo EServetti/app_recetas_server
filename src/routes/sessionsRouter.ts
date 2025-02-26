@@ -3,11 +3,15 @@ import validator from "../middlewares/validator";
 import {
   login,
   logout,
+  recoveringToken,
   register,
+  updatePassword,
   userData,
   verifyAccount,
 } from "../controllers/sessionsControllers";
 import passport from "../middlewares/passport";
+import joiValidator from "../middlewares/joiValidator";
+import { passwordSchema, userSchema } from "../schemas/userSchema";
 
 const sessionsRouter = Router();
 
@@ -15,6 +19,7 @@ const sessionsRouter = Router();
 sessionsRouter.post(
   "/register",
   validator(["PUBLIC"]),
+  joiValidator(userSchema),
   passport.authenticate("register", { session: false }),
   register
 );
@@ -40,5 +45,8 @@ sessionsRouter.put(
   validator(["PUBLIC"]),
   verifyAccount
 );
+sessionsRouter.put("/recover/:email", validator(["PUBLIC"]), recoveringToken)
+sessionsRouter.put("/password/:email/:token", validator(["PUBLIC"]), joiValidator(passwordSchema), updatePassword)
+
 
 export default sessionsRouter;
