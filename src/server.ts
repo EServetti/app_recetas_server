@@ -18,9 +18,10 @@ const initialCallback = () => {
 server.listen(process.env.PORT, initialCallback)
 
 server.use(express.json())
-server.use(cookieParser())
+server.use(cookieParser(process.env.SECRET_COOKIE))
 
 
 server.use(indexRouter)
 server.use(errorHandler)
 server.use(pathHandler)
+

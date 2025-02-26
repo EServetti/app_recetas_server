@@ -11,9 +11,13 @@ const validator = (allowedRoles: Role[]) => {
           if (allowedRoles.includes("PUBLIC")) {
             return next()
         }
-        const token = req.cookies["token"]
+        const token = req.signedCookies.token
+        if (!token) {
+          const error = new CustomError(403, "First login.")
+          throw error
+        }
         const user: User = readToken(token)
-        if (!allowedRoles.includes(user.role)) {
+        if (!allowedRoles.includes(user.role as Role)) {
             const error = new CustomError(403, "Not authorized")
             throw error
           } else {

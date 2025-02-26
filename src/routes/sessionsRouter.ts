@@ -1,7 +1,13 @@
 import { Router } from "express";
 import validator from "../middlewares/validator";
-import { register } from "../controllers/sessionsControllers";
-import passport from "../middlewares/passport"
+import {
+  login,
+  logout,
+  register,
+  userData,
+  verifyAccount,
+} from "../controllers/sessionsControllers";
+import passport from "../middlewares/passport";
 
 const sessionsRouter = Router();
 
@@ -12,5 +18,27 @@ sessionsRouter.post(
   passport.authenticate("register", { session: false }),
   register
 );
+sessionsRouter.post(
+  "/login",
+  validator(["PUBLIC"]),
+  passport.authenticate("login", { session: false }),
+  login
+);
+sessionsRouter.post("/logout", validator(["USER","ADMIN"]), logout)
 
-export default sessionsRouter
+// get
+sessionsRouter.get(
+  "/data",
+  validator(["USER", "ADMIN"]),
+  passport.authenticate("data", { session: false }),
+  userData
+);
+
+// put
+sessionsRouter.put(
+  "/verify/:email/:verifyCode",
+  validator(["PUBLIC"]),
+  verifyAccount
+);
+
+export default sessionsRouter;

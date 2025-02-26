@@ -23,6 +23,6 @@ const RecipeSchema = new Schema({
   nutrition: { type: NutritionSchema, required: true }
 });
 
-const RecipeModel = model("Recipe", RecipeSchema);
+const RecipeModel = model("recipe", RecipeSchema);
 
 export default RecipeModel;

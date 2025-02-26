@@ -1,3 +1,5 @@
+import UserDTO from "../database/DTO/user.dto";
+
 class CustomService {
   manager: any
 
@@ -34,6 +36,9 @@ class CustomService {
 
   createService = async (data: any) => {
     try {
+      if (data.email) {
+        data = new UserDTO(data)
+      }
       const one = await this.manager.create(data)
       return one
     } catch (error) {

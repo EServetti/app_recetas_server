@@ -30,7 +30,7 @@ interface Ingredient {
     verified?: boolean;
     verifyCode?: string | null;
     recipes?: ObjectId[]; 
-    role: "USER" | "ADMIN"; 
+    role?: "USER" | "ADMIN"; 
     resetPasswordToken?: string | null;
     resetPasswordExpires?: Date | null;
   }
