@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import {
   readService,
+  paginateService,
   readOneService,
   updateService,
   createService,
@@ -81,9 +82,13 @@ export const readRecipes = async (
   next: NextFunction
 ) => {
   try {
-    const { category, name } = req.query;
+    const { category, name, page } = req.query;
     const filter = name ? { name } : { category };
-    const recipes = await readService(filter);
+    const paginateOptions = {
+      page: page ? page as any : 1,
+      limit: 10,
+    }
+    const recipes = await paginateService(filter, paginateOptions);
     res.json({
       statusCode: 200,
       message: recipes,

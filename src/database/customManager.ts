@@ -1,4 +1,5 @@
 import { ObjectId } from "mongoose";
+import {PaginateOptions} from "../../types" 
 
 class CustomManager {
   Model: any;
@@ -22,6 +23,15 @@ class CustomManager {
         return all
     } catch (error) {
         throw error
+    }
+  }
+
+  async paginate (filter: any, paginate: PaginateOptions) {
+    try {
+      const all = await this.Model.paginate(filter, paginate)
+      return all
+    } catch (error) {
+      throw error
     }
   }
 

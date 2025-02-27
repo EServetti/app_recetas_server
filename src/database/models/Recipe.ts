@@ -1,4 +1,5 @@
 import { Schema, Types, model } from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2"
 
 const NutritionSchema = new Schema({
   calories: { type: Number, required: true },
@@ -22,6 +23,8 @@ const RecipeSchema = new Schema({
   instructions: { type: Array, required: true },
   nutrition: { type: NutritionSchema, required: true }
 });
+
+RecipeSchema.plugin(mongoosePaginate)
 
 const RecipeModel = model("recipe", RecipeSchema);
 

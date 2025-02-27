@@ -1,3 +1,4 @@
+import { PaginateOptions } from "../../types";
 import UserDTO from "../database/DTO/user.dto";
 
 class CustomService {
@@ -10,6 +11,15 @@ class CustomService {
    readService = async (filter: any) => {
     try {
       const all = await this.manager.read(filter)
+      return all
+    } catch (error) {
+      throw error
+    }
+  }
+
+  paginateService = async (filter: any, paginate: PaginateOptions) => {
+    try {
+      const all = await this.manager.paginate(filter, paginate)
       return all
     } catch (error) {
       throw error

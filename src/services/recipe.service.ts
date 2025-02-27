@@ -3,4 +3,4 @@ import CustomService from "./customService";
 
 const RecipeService = new CustomService(RecipeManager)
 
-export const {readService, readOneService, createService, updateService, destroyService} = RecipeService
+export const {readService, paginateService, readOneService, createService, updateService, destroyService} = RecipeService
