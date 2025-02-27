@@ -8,7 +8,7 @@ const client = new OpenAI({
 
 const openAI = async (arrayOfIngredients: string[]) => {
   try {
-    const prompt = `Genera una o más (tres en lo posible) recetas posibles utilizando únicamente los siguientes ingredientes: ${arrayOfIngredients.join(", ")}. 
+    const prompt = `Genera una o más (tres en lo posible) recetas posibles utilizando únicamente los siguientes ingredientes (no es necesario utilizar todos): ${arrayOfIngredients.join(", ")}. 
 
 La respuesta debe ser un array con cada receta dentro de él, en el siguiente formato JSON **válido**:
 
