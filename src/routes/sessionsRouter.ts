@@ -1,6 +1,7 @@
 import { Router } from "express";
 import validator from "../middlewares/validator";
 import {
+  destroyAccount,
   login,
   logout,
   recoveringToken,
@@ -47,6 +48,9 @@ sessionsRouter.put(
 );
 sessionsRouter.put("/recover/:email", validator(["PUBLIC"]), recoveringToken)
 sessionsRouter.put("/password/:email/:token", validator(["PUBLIC"]), joiValidator(passwordSchema), updatePassword)
+
+// delete
+sessionsRouter.delete("/delete", validator(["USER","ADMIN"]), destroyAccount)
 
 
 export default sessionsRouter;

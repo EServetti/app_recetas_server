@@ -7,6 +7,7 @@ import {
   destroyService,
 } from "../services/recipe.service";
 import openAI from "../utils/openAI";
+import { User } from "../../types";
 
 export const createRecipe = async (
   req: Request,
@@ -25,18 +26,54 @@ export const createRecipe = async (
   }
 };
 
-export const saveRecipe = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const data = req.body
-      await createService(data)
+export const saveRecipe = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const data = req.body;
+    await createService(data);
+    res.json({
+      statusCode: 201,
+      message: "Recipe created successfully!",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const readUserRecipes = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const one = req.user;
+    const { recipes } = one as User;
+    if (recipes) {
+      const arrayOfRecipes = [];
+      for (const id of recipes) {
+        const recipe = await readOneService(id);
+        arrayOfRecipes.push(recipe as never);
+      }
       res.json({
-        statusCode: 201,
-        message: "Recipe created successfully!"
-      })
-    } catch (error) {
-        return next(error)
+        statusCode: 200,
+        message: recipes,
+      });
+    } else {
+      const { category, name } = req.query;
+      const filter = name ? { name } : { category };
+      const recipes = await readService(filter);
+      res.json({
+        statusCode: 200,
+        message: recipes,
+      });
     }
-}
+  } catch (error) {
+    return next(error);
+  }
+};
 
 export const readRecipes = async (
   req: Request,
@@ -44,26 +81,13 @@ export const readRecipes = async (
   next: NextFunction
 ) => {
   try {
-    const { arrayOfIds } = req.body;
-    if (arrayOfIds) {
-      const recipes = [];
-      for (const id of arrayOfIds) {
-        const recipe = await readOneService(id);
-        recipes.push(recipe as never);
-      }
-      res.json({
-        statusCode: 200,
-        message: recipes,
-      });
-    } else {
-      const {category, name} = req.query
-      const filter = name ? {name} : {category}
-      const recipes =  await readService(filter)
-      res.json({
-        statusCode: 200,
-        message: recipes,
-      });
-    }
+    const { category, name } = req.query;
+    const filter = name ? { name } : { category };
+    const recipes = await readService(filter);
+    res.json({
+      statusCode: 200,
+      message: recipes,
+    });
   } catch (error) {
     return next(error);
   }
@@ -85,7 +109,6 @@ export const readRecipe = async (
     return next(error);
   }
 };
-
 
 export const destroyRecipe = async (
   req: Request,

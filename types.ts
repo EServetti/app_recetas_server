@@ -1,5 +1,3 @@
-import { ObjectId } from "mongoose";
-
 interface Ingredient {
     name: string;
     amount: string;
@@ -24,12 +22,13 @@ interface Ingredient {
   }
   
   export interface User {
+    _id: string;
     userName: string;
     email: string;
     password: string;
     verified?: boolean;
     verifyCode?: string | null;
-    recipes?: ObjectId[]; 
+    recipes?: string[]; 
     role?: "USER" | "ADMIN"; 
     resetPasswordToken?: string | null;
     resetPasswordExpires?: Date | null;

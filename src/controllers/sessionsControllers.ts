@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../../types";
-import { readByEmailService, updateService } from "../services/user.service";
+import { destroyService, readByEmailService, updateService } from "../services/user.service";
 import CustomError from "../utils/customError";
 import { createToken } from "../utils/jwt";
 import crypto from "crypto"
@@ -110,6 +110,23 @@ export const updatePassword = async (req: Request, res: Response, next: NextFunc
         res.json({
             statusCode: 200,
             message: "The password has been reset."
+        })
+    } catch (error) {
+        return next(error)
+    }
+}
+
+export const destroyAccount = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const one = req.user as User
+        if (!one) {
+            const error = new CustomError(400, "First Login.")
+            throw error
+        }
+        await destroyService(one._id)
+        res.json({
+            statusCode: 200,
+            message: "The account has been deleted."
         })
     } catch (error) {
         return next(error)
