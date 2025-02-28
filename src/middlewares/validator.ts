@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { readToken } from "../utils/jwt";
-import CustomError from "../utils/customError"
 import { User } from "../../types";
 
 type Role = "PUBLIC" | "USER" | "ADMIN"
@@ -13,13 +12,17 @@ const validator = (allowedRoles: Role[]) => {
         }
         const token = req.signedCookies.token
         if (!token) {
-          const error = new CustomError(403, "First login.")
-          throw error
+          return res.json({
+            statusCode: 403,
+            message: "First login."
+          })
         }
         const user: User = readToken(token)
         if (!allowedRoles.includes(user.role as Role)) {
-            const error = new CustomError(403, "Not authorized")
-            throw error
+            return res.json({
+              statusCode: 403,
+              message: "Not authorized"
+            })
           } else {
             req.user = user
             return next()

@@ -123,7 +123,7 @@ export const destroyAccount = async (req: Request, res: Response, next: NextFunc
             const error = new CustomError(400, "First Login.")
             throw error
         }
-        await destroyService(one._id)
+        await destroyService(one._id as string)
         res.json({
             statusCode: 200,
             message: "The account has been deleted."

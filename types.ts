@@ -22,7 +22,7 @@ interface Recipe {
 }
 
 export interface User {
-  _id: string;
+  _id?: string;
   userName: string;
   email: string;
   password: string;

@@ -37,7 +37,7 @@ export const saveRecipe = async (
     await createService(data);
     res.json({
       statusCode: 201,
-      message: "Recipe created successfully!",
+      message: "Recipe saved successfully!",
     });
   } catch (error) {
     return next(error);

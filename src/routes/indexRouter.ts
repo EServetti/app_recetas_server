@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { recipesRouter } from "./recipesRouter";
-import sessionsRouter from "./sessionsRouter";
+import {sessionsRouter} from "./sessionsRouter";
 
 export const indexRouter = Router()
 

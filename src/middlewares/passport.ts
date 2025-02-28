@@ -38,6 +38,7 @@ passport.use("login", new LocalStrategy({passReqToCallback: true, usernameField:
                 return done(error)
             } 
             const user = {
+                _id: one._id,
                 userName: one.userName,
                 email,
                 role: one.role,

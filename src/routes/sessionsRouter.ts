@@ -14,7 +14,7 @@ import passport from "../middlewares/passport";
 import joiValidator from "../middlewares/joiValidator";
 import { passwordSchema, userSchema } from "../schemas/userSchema";
 
-const sessionsRouter = Router();
+export const sessionsRouter = Router();
 
 // post
 sessionsRouter.post(
@@ -53,4 +53,3 @@ sessionsRouter.put("/password/:email/:token", validator(["PUBLIC"]), joiValidato
 sessionsRouter.delete("/delete", validator(["USER","ADMIN"]), destroyAccount)
 
 
-export default sessionsRouter;
