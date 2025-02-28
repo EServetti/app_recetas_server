@@ -9,6 +9,7 @@ const UserSchema = new Schema(
     verifyCode: { type: String, default: null }, 
     recipes: [{ type: Schema.Types.ObjectId, ref: "recipe" }], 
     role: { type: String, enum: ["USER", "ADMIN"], default: "USER" }, 
+    registeredWith: {type: String, enum: ["FACEBOOK","GOOGLE","EMAIL"]}, default: "EMAIL",
     resetPasswordToken: { type: String, default: null }, 
     resetPasswordExpires: { type: Date, default: null },
   },

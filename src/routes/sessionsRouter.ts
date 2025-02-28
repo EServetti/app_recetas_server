@@ -31,6 +31,7 @@ sessionsRouter.post(
   login
 );
 sessionsRouter.post("/logout", validator(["USER","ADMIN"]), logout)
+sessionsRouter.post("/google", validator(["PUBLIC"]), passport.authenticate("google", {session:false}),login)
 
 // get
 sessionsRouter.get(

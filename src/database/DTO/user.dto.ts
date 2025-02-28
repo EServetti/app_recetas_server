@@ -11,6 +11,7 @@ class UserDTO {
   verifyCode?: string | null;
   recipes?: ObjectId[];
   role: "USER" | "ADMIN";
+  registeredWith: "GMAIL" | "GOOGLE" | "FACEBOOK";
   resetPasswordToken?: string | null;
   resetPasswordExpires?: Date | null;
   constructor(data: User) {
@@ -21,9 +22,10 @@ class UserDTO {
       (this.verifyCode = crypto.randomBytes(6).toString("hex")),
       (this.recipes = []),
       (this.role = data.role || "USER"),
+      (this.registeredWith = data.registeredWith),
       (this.resetPasswordToken = null),
       (this.resetPasswordExpires = null);
   }
 }
 
-export default UserDTO
+export default UserDTO;

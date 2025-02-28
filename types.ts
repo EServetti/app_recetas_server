@@ -30,6 +30,7 @@ export interface User {
   verifyCode?: string | null;
   recipes?: string[];
   role?: "USER" | "ADMIN";
+  registeredWith: "GOOGLE" | "FACEBOOK" | "EMAIL";
   resetPasswordToken?: string | null;
   resetPasswordExpires?: Date | null;
 }

@@ -12,14 +12,14 @@ const validator = (allowedRoles: Role[]) => {
         }
         const token = req.signedCookies.token
         if (!token) {
-          return res.json({
+          res.json({
             statusCode: 403,
             message: "First login."
           })
         }
         const user: User = readToken(token)
         if (!allowedRoles.includes(user.role as Role)) {
-            return res.json({
+            res.json({
               statusCode: 403,
               message: "Not authorized"
             })
